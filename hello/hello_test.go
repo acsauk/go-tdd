@@ -40,5 +40,4 @@ func TestHello(t *testing.T) {
 		want := "Halo, Alex"
 		assertCorrectMessage(t, got, want)
 	})
-	
 }
