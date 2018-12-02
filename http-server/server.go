@@ -5,20 +5,15 @@ import (
 	"net/http"
 )
 
-func PlayerServer(w http.ResponseWriter, r *http.Request) {
-	player := r.URL.Path[len("/players/"):]
-
-	fmt.Fprint(w, GetPlayerScore(player))
+type PlayerServer struct {
+	store PlayerStore
 }
 
-func GetPlayerScore(name string) string {
-	if name == "Pepper" {
-		return "20"
-	}
+func (p *PlayerServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	player := r.URL.Path[len("/players/"):]
+	fmt.Fprint(w, p.store.GetPlayerScore(player))
+}
 
-	if name == "Floyd" {
-		return "10"
-	}
-
-	return ""
+type PlayerStore interface {
+	GetPlayerScore(name string) int
 }
